@@ -1,0 +1,45 @@
+.navBar {
+    --border-width: 4px;
+    display: flex;
+    align-items: center;
+    // flex-direction: column;
+    // justify-content: center;
+    // margin-top: 90px;
+    justify-content: space-around;
+    width: 100vw;
+    position: relative;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.055);
+    font-family: consolas;
+    a {
+        text-decoration: none;
+        color: white;
+        line-height: 2rem;
+    }
+    &::after {
+        position: absolute;
+        content: "";
+        z-index: -1;
+        top: calc(-1 * var(--border-width));
+        left: calc(-1 * var(--border-width));
+        width: calc(100% + var(--border-width) * 2);
+        height: calc(100% + var(--border-width) * 2);
+        background: linear-gradient(
+            rgb(3, 0, 33),
+            rgb(4, 0, 35) 2%,
+            rgb(11, 5, 57) 24%,
+            rgb(14, 7, 65) 38%,
+            rgb(44, 21, 117) 71%,
+            rgb(45, 48, 143)
+        );
+        background-size: 300% 300%;
+        background-position: 0 50%;
+        border-radius: calc(2 * var(--border-width));
+        animation: animate 35s linear infinite;
+    }
+}
+@keyframes animate {
+    50% {
+        background-position: 100% 50%;
+    }
+}

@@ -1,0 +1,26 @@
+.chat {
+    display: flex;
+    margin: 150px 0 30px 50px;
+    flex-direction: column;
+    .chatText {
+        max-width: 400px;
+        max-height: 400px;
+        min-width: 60px;
+        min-height: 20px;
+        border-radius: 5px 5px 0 0;
+        // margin-left: 50px;
+        margin: 0 0 15px 50px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 1);
+        background-color: linear-gradient(336deg, rgba(0, 0, 255, 0.8) 70.71%);
+        p {
+            font-family: consolas;
+            margin-left: 5px;
+            color: rgb(255, 255, 255);
+        }
+    }
+    .avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+}

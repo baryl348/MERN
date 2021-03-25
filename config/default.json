@@ -1,5 +1,5 @@
 {
-    "port":4000,
-    "jwtSecretKey":"baryl",
-    "mongoUri":"mongodb+srv://baryl:2010tima@cluster1.6rn4y.mongodb.net/app?retryWrites=true&w=majority"
+    "port": 4000,
+    "jwtSecretKey": "baryl",
+    "mongoUri": "mongodb+srv://baryl:2010tima@cluster1.6rn4y.mongodb.net/app?retryWrites=true&w=majority"
 }
