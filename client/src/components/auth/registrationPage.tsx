@@ -1,15 +1,22 @@
 import { Field, Form, Formik } from 'formik'
 import React from 'react'
+import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import style from './login-resgistr.module.scss'
+import { authRegistration } from '../../redux/auth-reducer/auth-reducer'
 
-const RegistrationPage: React.FC = () => {
+interface PropsType {
+    authRegistration: (firstName: string, secondName: string, password: string, email: string) => void
+}
+
+const RegistrationPage: React.FC<PropsType> = ({ authRegistration }) => {
     return <div className={style.body}>
         <Formik
             initialValues={{ firstName: '', secondName: '', email: '', password: '' }}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
                     console.log(JSON.stringify(values, null, 2));
+                    authRegistration(values.email, values.firstName, values.password, values.secondName)
                     setSubmitting(false);
                 }, 400);
             }}
@@ -42,4 +49,4 @@ const RegistrationPage: React.FC = () => {
         </Formik>
     </div>
 }
-export default RegistrationPage
+export default connect(null, { authRegistration })(RegistrationPage)
