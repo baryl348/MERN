@@ -4,19 +4,23 @@ import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import style from './login-resgistr.module.scss'
 import { authRegistration } from '../../redux/auth-reducer/auth-reducer'
+import { AppState } from '../../redux/redux-store'
+import LoadingPage from '../../loading/loading'
 
 interface PropsType {
     authRegistration: (firstName: string, secondName: string, password: string, email: string) => void
+    isLoading: boolean
 }
 
-const RegistrationPage: React.FC<PropsType> = ({ authRegistration }) => {
+const RegistrationPage: React.FC<PropsType> = ({ authRegistration, isLoading }) => {
     return <div className={style.body}>
         <Formik
             initialValues={{ firstName: '', secondName: '', email: '', password: '' }}
             onSubmit={(values, { setSubmitting }) => {
                 setTimeout(() => {
-                    console.log(JSON.stringify(values, null, 2));
-                    authRegistration(values.email, values.firstName, values.password, values.secondName)
+                    // console.log(JSON.stringify(values, null, 2));
+                    console.log(values.firstName, values.secondName, values.email, values.password)
+                    authRegistration(values.firstName, values.secondName, values.email, values.password)
                     setSubmitting(false);
                 }, 400);
             }}
@@ -40,6 +44,7 @@ const RegistrationPage: React.FC<PropsType> = ({ authRegistration }) => {
                             </div>
                             <div className={style.inputBox}>
                                 <button type='submit' disabled={isSubmitting} >Registration</button>
+                                {isLoading ? <LoadingPage /> : null}
                             </div>
                             <p>Already registered ? <NavLink to='/Login'>Click here</NavLink></p>
                         </Form>
@@ -49,4 +54,7 @@ const RegistrationPage: React.FC<PropsType> = ({ authRegistration }) => {
         </Formik>
     </div>
 }
-export default connect(null, { authRegistration })(RegistrationPage)
+const mapStateToProps = (state: AppState) => ({
+    isLoading: state.auth.isLoading
+})
+export default connect(mapStateToProps, { authRegistration })(RegistrationPage)

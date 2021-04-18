@@ -1,0 +1,51 @@
+.body {
+    font-family: consolas;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    padding-bottom: 20px;
+    .loader {
+        position: relative;
+        -webkit-box-reflect: below -10px linear-gradient(transparent, black);
+        ::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: rgb(2, 88, 187);
+            animation: blinkCursor 0.8s steps(3) infinite;
+        }
+        h2 {
+            position: relative;
+            color: rgb(2, 88, 187);
+            letter-spacing: 5px;
+            font-size: 2rem;
+            text-transform: uppercase;
+            animation: typing 8s steps(10) infinite;
+            overflow: hidden;
+        }
+    }
+    @keyframes blinkCursor {
+        0%,
+        75% {
+            opacity: 1;
+        }
+        76%,
+        100% {
+            opacity: 0;
+        }
+    }
+}
+@keyframes typing {
+    0%,
+    90%,
+    100% {
+        width: 0;
+    }
+    30%,
+    60% {
+        width: 220px;
+    }
+}

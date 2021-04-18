@@ -2,11 +2,10 @@ import { Router } from "express";
 import User from "../schema&model/user.js";
 import bcrypt from "bcryptjs";
 import { check, validationResult } from "express-validator";
-import jwt from "jsonwebtoken";
-import config from "../config/default.json";
+import test from "jsonwebtoken";
 
 const router = Router();
-
+const jwt = test
 // /api/auth/registration
 router.post(
   "/registration",
@@ -18,6 +17,7 @@ router.post(
   ],
   async (req, res) => {
     try {
+      console.log(req.body, 'were')
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -51,34 +51,42 @@ router.post(
   "/login",
   [
     check("email", "Некорректный email").normalizeEmail().isEmail(),
-    check("password", "Максимальная длина пароля 30")
-      .isLength({ max: 30 })
-      .exists(),
+    check("password", "Максимальная длина пароля 30").exists(),
   ],
   async (req, res) => {
+    console.log(req.body, 'login')
     try {
-      const errors = validationResult(req);
+      const errors = validationResult(req)
+
       if (!errors.isEmpty()) {
         return res.status(400).json({
           errors: errors.array(),
-          message: "Ошибка авотризации",
-        });
+          message: 'Некорректный данные при входе в систему'
+        })
       }
-      const { email, password } = req.body;
-      const user = await User.findOne({ email });
+  
+      const {email, password} = req.body
+  
+      const user = await User.findOne({ email })
+  
       if (!user) {
-        return res.status(400).json({ message: "Пользователь не найден" });
+        return res.status(400).json({ message: 'Пользователь не найден' })
       }
-      const isSuccessPassword = bcrypt.compare(password, user.password);
-      if (!isSuccessPassword) {
-        return res.status(400).json({ message: "Пароль введен не верно" });
+  
+      const isMatch = await bcrypt.compare(password, user.password)
+  
+      if (!isMatch) {
+        return res.status(400).json({ message: 'Неверный пароль, попробуйте снова' })
       }
-      // expiresIn сколько будет существовать токен
-      const token = jwt.sign({ userId: user.id }, config.get("jwtSecretKey"), {
-        expiresIn: "1h",
-      });
-      res.json({ token, userId: user.id });
+
+  
+     let token = jwt.sign({
+        userId: user.id
+      }, 'baryl' , { expiresIn: '1h' })
+  
+      res.json({ token, userId: user.id })
     } catch (error) {
+      console.log(error)
       res.status(500).json({ message: "Что-то пошло не так попробуйте снова" });
     }
   }

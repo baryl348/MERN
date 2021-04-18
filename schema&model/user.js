@@ -7,7 +7,13 @@ const schema = new Schema({
   secondName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  links: [{ type: Types.ObjectId, ref: "Link" }],
+  token : {type: String,},
+  tokenExp :{type: Number},
+  image: String,
+  role : {
+    type:Number,
+    default: 0 
+},
 });
 
 export default model("User", schema);

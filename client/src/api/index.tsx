@@ -9,7 +9,10 @@ const instanceNotAuth = axios.create({
 })
 
 export const auth = {
-    async registration(email: string, password: string, firstName: string, secondName: string) {
-        return (await instanceNotAuth.post('api/auth/registration', { email, password, firstName, secondName })).data
+    async registration(firstName: string, secondName: string, email: string, password: string) {
+        return (await instanceNotAuth.post('api/auth/registration', { firstName, secondName, email, password })).data
+    },
+    async login(email: string, password: string) {
+        return (await instanceNotAuth.post('api/auth/login', { email, password }))
     }
 }
