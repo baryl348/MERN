@@ -3,7 +3,6 @@ import { Redirect, Route, Switch } from 'react-router'
 import LoginPage from '../components/auth/loginPage'
 import RegistrationPage from '../components/auth/registrationPage'
 import Messages from '../components/messages/message'
-import Mymessages from '../components/messages/Mymessage'
 import NavBar from '../components/navBar/navBar'
 
 // interface PropsType {
@@ -16,7 +15,6 @@ export const useRoutes = (isAuth: boolean) => {
             <Switch>
                 <Route path='/Main' render={() => <NavBar />} />
                 <Route path='/Main' render={() => <Messages />} />
-                <Route path='/Main' render={() => <Mymessages />} />
                 <Redirect to='/Main' />
             </Switch>
         )

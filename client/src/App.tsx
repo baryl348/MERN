@@ -1,14 +1,16 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { isAuthSelector } from './redux/selectors/auth-selector';
 import { useRoutes } from './routes/routes';
 
 
 
 const App: React.FC = () => {
-  const routes = useRoutes(false)
+  const isAuth = useSelector(isAuthSelector)
+  const routes = useRoutes(isAuth)
   return (
     <div>
       {routes}
-
     </div>
   )
 }
