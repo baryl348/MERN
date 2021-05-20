@@ -1,9 +1,9 @@
 import { Field, Form, Formik } from 'formik'
-import React, { useState } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { connect, useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import style from './login-resgistr.module.scss'
-import { authLogin } from '../../redux/auth-reducer/auth-reducer'
+import { authLogin, checkUser } from '../../redux/auth-reducer/auth-reducer'
 import { AppState } from '../../redux/redux-store'
 import LoadingPage from '../../loading/loading'
 
@@ -14,6 +14,14 @@ interface PropsType {
 
 const LoginPage: React.FC<PropsType> = ({ authLogin, isLoading }) => {
     console.log(isLoading, 'props')
+
+    const dispatch = useDispatch()
+    const test = () => {
+        dispatch(checkUser())
+    }
+    useEffect(() => {
+        (test())
+    })
     const [issLoading, setIsLoading] = useState(isLoading ? true : false)
     return <div className={style.body}>
         <Formik

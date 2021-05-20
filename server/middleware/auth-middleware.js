@@ -1,23 +1,24 @@
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-// TODO не работает проверка токена
+
 module.exports = function (req, res, next) {
-    console.log(req.method,'method')
-    if (req.method === "GET") {
+    console.log(req.headers,"HEADER")
+    if (req.method === "OPTIONS") {
         next()
     }
     try {
-        console.log(req.headers.authorization.split(' ')[1],'headers')
-        const tokenUser = req.headers.authorization.split(' ')[1] // Bearer asfasnfkajsfnjk
-        console.log(tokenUser,'tokenUser')
-        if (!tokenUser) {
+        const token = req.headers.authorization.split(' ')[1] // Bearer asfasnfkajsfnjk
+        console.log(token,'TOKEN')
+        if (!token) {
             return res.status(401).json({message: "Не авторизован"})
         }
-        const decoded = jwt.verify(tokenUser, process.env.SECRET_KEY)
-        console.log(decode,'decode')
+        const decoded = jwt.verify(token, process.env.SECRET_KEY) 
+        console.log(decoded,'DECODED')
         req.user = decoded
+        console.log(req.user,'user')
         next()
     } catch (e) {
+        console.log(e, 'error')
         res.status(401).json({message: "Не авторизован"})
     }
 };

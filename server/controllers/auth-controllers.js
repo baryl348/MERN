@@ -8,7 +8,7 @@ const generateJwt = (id,firstName,secondName,email) => {
     return jwt.sign(
         {id,firstName,secondName,email},
         process.env.SECRET_KEY,
-        {expiresIn: '24h'}
+        {expiresIn: "1h"}
     )
 }
 
@@ -70,11 +70,16 @@ try {
         }
         
     }
-    async check(res,req,next){
-        console.log(req,'req')
-        const{id,firstName,secondName,email} = req.user
-        const tokenUser = generateJwt(id,firstName,secondName,email)
-        return res.json({user:tokenUser})
+    async check(req,res,next){
+        try {
+            console.log(req.user,'req')
+            const{id,firstName,secondName,email} = req.user
+            const token = generateJwt(id,firstName,secondName,email)
+            console.log(token,"TOKEN for controller")
+            return res.json({token})
+        } catch (error) {
+            console.log(error)
+        }  
     }
 }
-module.exports = new UserController
+module.exports = new UserController()
